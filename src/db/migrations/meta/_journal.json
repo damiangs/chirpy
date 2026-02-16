@@ -15,6 +15,13 @@
       "when": 1771178893102,
       "tag": "0001_fresh_hellfire_club",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1771203507854,
+      "tag": "0002_zippy_meteorite",
+      "breakpoints": true
     }
   ]
 }
