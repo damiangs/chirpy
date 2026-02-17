@@ -3,6 +3,8 @@ import type { Request, Response } from "express";
 import { respondWithJSON } from "./json.js";
 import { BadRequestError, NotFoundError } from "./errors.js";
 import { createChirp, getChirps, getChirp } from "../db/queries/chirps.js";
+import { getBearerToken, validateJWT } from "../auth.js";
+import { config } from "../config.js";
 
 export function validateAndCleanChirp(body: string) {
   const maxChirpLength = 140;
@@ -25,11 +27,15 @@ export function validateAndCleanChirp(body: string) {
 }
 
 export async function handlerChirpsCreate(req: Request, res: Response) {
+  const token = getBearerToken(req);
+
+  const userId = validateJWT(token, config.api.jwtSecret);
+
   const cleanedBody = validateAndCleanChirp(req.body.body);
 
   const chirp = await createChirp({
     body: cleanedBody,
-    userId: req.body.userId,
+    userId: userId,
   });
 
   respondWithJSON(res, 201, {

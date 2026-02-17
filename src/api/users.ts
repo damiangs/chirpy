@@ -5,6 +5,8 @@ import { respondWithJSON } from "./json.js";
 import { BadRequestError } from "./errors.js";
 import { checkPasswordHash, hashPassword } from "../auth.js";
 import { getUserByEmail } from "../db/queries/users.js";
+import { config } from "../config.js";
+import { makeJWT } from "../auth.js";
 
 export async function handlerUsersCreate(req: Request, res: Response) {
   type parameters = {
@@ -38,7 +40,7 @@ export async function handlerUsersCreate(req: Request, res: Response) {
 }
 
 export async function handlerLogin(req: Request, res: Response) {
-  const { email, password } = req.body;
+  const { email, password, expiresInSeconds } = req.body;
 
   const user = await getUserByEmail(email);
 
@@ -48,10 +50,19 @@ export async function handlerLogin(req: Request, res: Response) {
     });
   }
 
+  let expiresIn = 3600;
+
+  if (typeof expiresInSeconds === "number") {
+    expiresIn = Math.min(expiresInSeconds, 3600);
+  }
+
+  const token = makeJWT(user.id, expiresIn, config.api.jwtSecret);
+
   respondWithJSON(res, 200, {
     id: user.id,
     email: user.email,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
+    token,
   });
 }
