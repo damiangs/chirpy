@@ -22,6 +22,13 @@
       "when": 1771203507854,
       "tag": "0002_zippy_meteorite",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1771450881921,
+      "tag": "0003_vengeful_ego",
+      "breakpoints": true
     }
   ]
 }

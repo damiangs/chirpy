@@ -2,6 +2,7 @@ import { Request } from "express";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import type { JwtPayload } from "jsonwebtoken";
+import crypto from "crypto";
 
 import { UserNotAuthenticatedError, BadRequestError } from "./api/errors.js";
 
@@ -74,4 +75,11 @@ export function getBearerToken(req: Request) {
   const token = splittedHeader[1];
 
   return token;
+}
+
+export function makeRefreshToken() {
+  const randomData = crypto.randomBytes(32);
+  const readableString = randomData.toString("hex");
+
+  return readableString;
 }

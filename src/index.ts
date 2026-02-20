@@ -11,7 +11,8 @@ import {
   handlerChirpsRetrieve,
   handlerChirpsGet,
 } from "./api/chirps.js";
-import { handlerUsersCreate, handlerLogin } from "./api/users.js";
+import { handlerUsersCreate } from "./api/users.js";
+import { handlerLogin, handlerRefresh, handlerRevoke } from "./api/auth.js";
 import {
   middlewareLogResponse,
   middlewareMetricsInc,
@@ -41,6 +42,14 @@ app.post("/admin/reset", (req, res, next) => {
 
 app.post("/api/login", (req, res, next) => {
   Promise.resolve(handlerLogin(req, res)).catch(next);
+});
+
+app.post("/api/refresh", (req, res, next) => {
+  Promise.resolve(handlerRefresh(req, res)).catch(next);
+});
+
+app.post("/api/revoke", (req, res, next) => {
+  Promise.resolve(handlerRevoke(req, res)).catch(next);
 });
 
 app.post("/api/users", (req, res, next) => {
