@@ -63,13 +63,13 @@ export function getBearerToken(req: Request) {
   const authHeader = req.get("Authorization");
 
   if (!authHeader) {
-    throw new BadRequestError("Malformed authorization header");
+    throw new UserNotAuthenticatedError("Malformed authorization header");
   }
 
   const splittedHeader = authHeader.split(" ");
 
   if (splittedHeader.length < 2 || splittedHeader[0] !== "Bearer") {
-    throw new BadRequestError("Malformed authorization header");
+    throw new UserNotAuthenticatedError("Malformed authorization header");
   }
 
   const token = splittedHeader[1];
