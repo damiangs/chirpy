@@ -14,6 +14,7 @@ import {
 } from "./api/chirps.js";
 import { handlerUsersCreate, handlerUsersUpdate } from "./api/users.js";
 import { handlerLogin, handlerRefresh, handlerRevoke } from "./api/auth.js";
+import { handlerWebhook } from "./api/webhooks.js";
 import {
   middlewareLogResponse,
   middlewareMetricsInc,
@@ -39,6 +40,10 @@ app.get("/admin/metrics", (req, res, next) => {
 });
 app.post("/admin/reset", (req, res, next) => {
   Promise.resolve(handlerReset(req, res)).catch(next);
+});
+
+app.post("/api/polka/webhooks", (req, res, next) => {
+  Promise.resolve(handlerWebhook(req, res)).catch(next);
 });
 
 app.post("/api/login", (req, res, next) => {

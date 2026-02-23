@@ -60,6 +60,7 @@ export async function handlerLogin(req: Request, res: Response) {
     updatedAt: user.updatedAt,
     token: accessToken,
     refreshToken: refreshToken,
+    isChirpyRed: user.isChirpyRed,
   } satisfies LoginResponse);
 }
 
@@ -84,7 +85,7 @@ export async function handlerRefresh(req: Request, res: Response) {
 export async function handlerRevoke(req: Request, res: Response) {
   const revokeToken = getBearerToken(req);
 
-  const result = await revokeRefreshToken(revokeToken);
+  await revokeRefreshToken(revokeToken);
 
   res.status(204).send();
 }
