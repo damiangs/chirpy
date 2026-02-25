@@ -65,6 +65,18 @@ export async function handlerChirpsRetrieve(req: Request, res: Response) {
 
   const chirps = await getChirps(authorId);
 
+  let sortDirection = "asc";
+  let sortDirectionParam = req.query.sort;
+  if (sortDirectionParam === "desc") {
+    sortDirection = "desc";
+  }
+
+  chirps.sort((a, b) =>
+    sortDirection === "asc"
+      ? a.createdAt.getTime() - b.createdAt.getTime()
+      : b.createdAt.getTime() - a.createdAt.getTime(),
+  );
+
   respondWithJSON(res, 200, chirps);
 }
 
