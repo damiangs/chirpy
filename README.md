@@ -1,4 +1,4 @@
-## My First Web Server
+## My First Web Server "Chirpy"
 
 This project is a small Node.js/TypeScript web server built with **Express**, **Postgres**, and **Drizzle ORM**. It exposes a simple API for:
 
@@ -126,13 +126,16 @@ Base URL (local): `http://localhost:<PORT>`
 
 - **POST** `/api/login`  
   Body:
+
   ```json
   {
     "email": "user@example.com",
     "password": "plain-text-password"
   }
   ```
+
   Response (200):
+
   ```json
   {
     "id": "user-uuid",
@@ -147,10 +150,13 @@ Base URL (local): `http://localhost:<PORT>`
 
 - **POST** `/api/refresh`  
   Uses a refresh token passed as a Bearer token in the `Authorization` header:
+
   ```http
   Authorization: Bearer <refresh-token>
   ```
+
   Response (200):
+
   ```json
   {
     "token": "new-jwt-access-token"
@@ -168,13 +174,16 @@ Base URL (local): `http://localhost:<PORT>`
 
 - **POST** `/api/users` – create a user  
   Body:
+
   ```json
   {
     "email": "user@example.com",
     "password": "plain-text-password"
   }
   ```
+
   Response (201):
+
   ```json
   {
     "id": "user-uuid",
@@ -205,15 +214,19 @@ All chirp‑writing operations require a valid JWT access token in the `Authoriz
 
 - **POST** `/api/chirps` – create a chirp  
   Headers:
+
   ```http
   Authorization: Bearer <jwt-access-token>
   ```
+
   Body:
+
   ```json
   {
     "body": "Hello from my first web server!"
   }
   ```
+
   The server:
   - Enforces a max length of 140 characters.
   - Replaces certain “bad words” (`kerfuffle`, `sharbert`, `fornax`) with `"****"`.
@@ -278,4 +291,3 @@ Tests are powered by `vitest` and live alongside the source files.
 ## License
 
 This project is licensed under the ISC License.
-
